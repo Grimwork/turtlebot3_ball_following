@@ -7,7 +7,7 @@ import numpy as np
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from turtlebot3_ball_following.msg import ImageInfo
-from constants import *
+from constants import LOWER_YELLOW, HIGHER_YELLOW
 
 bridge = CvBridge()
 
