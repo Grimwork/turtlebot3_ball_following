@@ -28,7 +28,7 @@ class ImageProcessing:
 
     def image_listener_callback(self, image_data):
         try:
-            frame = bridge.imgmsg_to_cv2(image_data, "bgr8")
+            frame = self.bridge.imgmsg_to_cv2(image_data, "bgr8")
         except CvBridgeError as e:
             print(e)
 
