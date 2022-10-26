@@ -37,6 +37,7 @@ class ImageListener:
         )
 
         circles = np.uint16(np.around(circles))
+        rospy.loginfo(rospy.get_caller_id() + "\n" + str(circles))
 
         for [x, y, radius] in circles[0,:]:
             if mask[y, x]:
