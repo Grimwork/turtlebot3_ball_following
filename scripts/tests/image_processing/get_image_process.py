@@ -24,25 +24,24 @@ class ImageListener:
             frame = self.bridge.imgmsg_to_cv2(image_data, "bgr8")
         except CvBridgeError as e:
             print(e)
-
+      
         hsv_frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
         mask = cv.inRange(hsv_frame, LOWER_YELLOW, HIGHER_YELLOW)
 
-        gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        circles = cv.HoughCircles(
-            gray_frame, 
-            cv.HOUGH_GRADIENT,
-            1,20,
-            param1=50,param2=30,minRadius=0,maxRadius=0
-        )
+        contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
 
-        circles = np.uint16(np.around(circles))
+        circles = []
+
+        for c in contours:
+            ((x, y), radius) = cv.minEnclosingCircle(c)
+            circles.append([int(x), int(y), int(radius)])
+
         rospy.loginfo(rospy.get_caller_id() + "\n" + str(circles))
 
-        for [x, y, radius] in circles[0,:]:
+        for [x, y, radius] in circles:
             if mask[y, x]:
-                cv.circle(frame, (x, y), radius, (0, 255, 0), 2)
-                cv.circle(frame, (x, y), 2, (0, 0, 255), 3)
+                cv.circle(frame, (x, y), radius, (0, 255, 0), 1)
+                cv.circle(frame, (x, y), 2, (0, 0, 255), 1)
 
         cv.imshow("result", frame)
 

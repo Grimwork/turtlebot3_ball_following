@@ -11,16 +11,16 @@ from constants import LOWER_YELLOW, HIGHER_YELLOW
 
 class ImageProcessing:
 
-    def __init__(self):
+    bridge = CvBridge()
 
-        self.bridge = CvBridge()
+    def __init__(self):
 
         rospy.init_node("camera_driver", anonymous=True)
 
         self.sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_listener_callback)
         self.pub = rospy.Publisher("/image_processing/info", ImageInfo, queue_size=10)
 
-        self.rate = rospy.Rate(2) # 2hz
+        self.rate = rospy.Rate(5) # 5hz
 
         rospy.spin()
 
@@ -35,36 +35,34 @@ class ImageProcessing:
         hsv_frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
         mask = cv.inRange(hsv_frame, LOWER_YELLOW, HIGHER_YELLOW)
 
-        gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        circles = cv.HoughCircles(
-            gray_frame, 
-            cv.HOUGH_GRADIENT,
-            1,20,
-            param1=50,param2=30,minRadius=0,maxRadius=0
-        )
+        contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
 
-        circles = np.uint16(np.around(circles))
-        circles = circles[0,:]
+        image_info = ImageInfo()
 
-        if circles.size == 0:
-            rospy.loginfo(rospy.get_caller_id() + " I don't see yellow ball")
-            return
+        if len(contours) == 0:
+            rospy.loginfo(rospy.get_caller_id() + " I don't see yellow ball (contours)")
+        else:
+            circles = []
+            for c in contours:
+                ((x, y), radius) = cv.minEnclosingCircle(c)
+                circles.append([int(x), int(y), int(radius)])
 
-        for [x, y, radius] in circles:
-            if mask[y, x]:
-                image_info = ImageInfo()
+            if len(circles) == 0:
+                rospy.loginfo(rospy.get_caller_id() + " I don't see yellow ball (minEnclosingCircle)")
+        
+            for [x, y, radius] in circles:
+                if mask[y, x]:
+                    image_info.ball_found = True
+                    image_info.ball_center_x = x
+                    image_info.ball_center_y = y
+                    image_info.ball_radius = radius
 
-                image_info.ball_found = len(circles) > 0
-                image_info.ball_center_x = x
-                image_info.ball_center_y = y
-                image_info.ball_radius = radius
+                    rospy.loginfo(rospy.get_caller_id() + " Publishing image information :\n" + str(image_info))
 
-                self.pub.publish(image_info)
+                    #TODO Gerer le cas où on a plusieurs boules
+                    break
 
-                rospy.loginfo(rospy.get_caller_id() + " Publishing image information :\n" + str(image_info))
-
-                #TODO Gerer le cas où on a plusieurs boules
-                break
+        self.pub.publish(image_info)
 
         self.rate.sleep()
 
