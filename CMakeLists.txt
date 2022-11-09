@@ -8,6 +8,7 @@ project(turtlebot3_ball_following)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  moveit_commander
   rospy
   roscpp
   std_msgs
@@ -55,11 +56,10 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  Attach.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
