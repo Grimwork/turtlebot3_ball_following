@@ -1,10 +1,17 @@
 #include <gazebo/gazebo.hh>
+#include <gazebo/common/common.hh>
+#include <gazebo/physics/physics.hh>
 #include <ignition/math/Vector3.hh>
+#include <string.h>
 
 namespace gazebo
 {
   class Ball_moving_plugin : public ModelPlugin
   {
+
+    private :
+    std::string key;
+    float velocity;
 
     // Pointer to the model
     private: physics::ModelPtr model;
@@ -15,6 +22,9 @@ namespace gazebo
     {
         this->model = _model;
 
+        // Print Model name on console when world is loaded (yellow ball here)
+        std::cout << "Model Name = " << this->model->GetName() << std::endl; 
+
         // Listen to the update event. This event is broadcast every
         // simulation iteration.
         this->updateConnection = event::Events::ConnectWorldUpdateBegin(
@@ -24,7 +34,8 @@ namespace gazebo
     // Called by the world update start event
     public: void OnUpdate()
     {
-      this->model->SetLinearVel(ignition::math::Vector3d(.3, 0, 0));
+      //apply a small velocity on ball on axis x
+
     }
 
   };
