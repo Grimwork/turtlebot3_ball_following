@@ -46,7 +46,7 @@ if __name__=="__main__":
 
     rospy.init_node('ball_teleop_key')
     pub = rospy.Publisher('ball_moving_info', BallMoveInfo, queue_size=10)
-
+    
     print(msg)
     while not rospy.is_shutdown():
         key = getKey()
