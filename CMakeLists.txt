@@ -50,6 +50,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   ImageInfo.msg
+  BallMoveInfo.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -205,3 +206,11 @@ catkin_install_python(PROGRAMS
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+find_package(gazebo REQUIRED)
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_library(ball_moving_plugin SHARED plugins/ball_moving_plugin.cc)
+target_link_libraries(ball_moving_plugin ${GAZEBO_LIBRARIES})
