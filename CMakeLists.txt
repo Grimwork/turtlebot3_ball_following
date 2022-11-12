@@ -158,7 +158,8 @@ catkin_package(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
    scripts/video_capture.py
-   scripts/ball_tracking_v0.py
+   scripts/tracking_command.py
+   scripts/tests/ball_tracking_v0.py
    scripts/tests/image_processing/check_image_info.py
    scripts/tests/image_processing/get_image_process.py
    scripts/tests/pick/attach.py
