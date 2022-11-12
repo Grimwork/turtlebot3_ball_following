@@ -20,7 +20,7 @@ class ImageProcessing:
         self.sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_listener_callback)
         self.pub = rospy.Publisher("/image_processing/info", ImageInfo, queue_size=10)
 
-        self.rate = rospy.Rate(5) # 5hz
+        self.rate = rospy.Rate(75) # 75hz
 
         rospy.spin()
 

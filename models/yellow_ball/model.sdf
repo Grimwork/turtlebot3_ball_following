@@ -22,7 +22,7 @@
       <visual name='visual'>
         <geometry>
           <sphere>
-            <radius>0.0375121</radius>
+            <radius>0.03</radius>
           </sphere>
         </geometry>
         <material>
@@ -99,6 +99,5 @@
     </link>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
-    <plugin name="ball_moving_plugin" filename="libball_moving_plugin.so"/>
   </model>
 </sdf>

@@ -2,9 +2,9 @@
 #include <gazebo/common/Plugin.hh>
 #include <ros/ros.h>
 #include "gazebo_ros_link_attacher.h"
-#include "gazebo_ros_link_attacher/Attach.h"
-#include "gazebo_ros_link_attacher/AttachRequest.h"
-#include "gazebo_ros_link_attacher/AttachResponse.h"
+#include "turtlebot3_ball_following/Attach.h"
+#include "turtlebot3_ball_following/AttachRequest.h"
+#include "turtlebot3_ball_following/AttachResponse.h"
 #include <ignition/math/Pose3.hh>
 
 namespace gazebo
@@ -178,8 +178,8 @@ namespace gazebo
 
   }
 
-  bool GazeboRosLinkAttacher::attach_callback(gazebo_ros_link_attacher::Attach::Request &req,
-                                              gazebo_ros_link_attacher::Attach::Response &res)
+  bool GazeboRosLinkAttacher::attach_callback(turtlebot3_ball_following::Attach::Request &req,
+                                              turtlebot3_ball_following::Attach::Response &res)
   {
     ROS_INFO_STREAM("Received request to attach model: '" << req.model_name_1
                     << "' using link: '" << req.link_name_1 << "' with model: '"
@@ -197,8 +197,8 @@ namespace gazebo
 
   }
 
-  bool GazeboRosLinkAttacher::detach_callback(gazebo_ros_link_attacher::Attach::Request &req,
-                                              gazebo_ros_link_attacher::Attach::Response &res){
+  bool GazeboRosLinkAttacher::detach_callback(turtlebot3_ball_following::Attach::Request &req,
+                                              turtlebot3_ball_following::Attach::Response &res){
       ROS_INFO_STREAM("Received request to detach model: '" << req.model_name_1
                       << "' using link: '" << req.link_name_1 << "' with model: '"
                       << req.model_name_2 << "' using link: '" <<  req.link_name_2 << "'");

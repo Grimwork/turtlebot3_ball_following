@@ -15,9 +15,9 @@
 #include <gazebo/common/Events.hh>
 #include "gazebo/msgs/msgs.hh"
 #include "gazebo/transport/transport.hh"
-#include "gazebo_ros_link_attacher/Attach.h"
-#include "gazebo_ros_link_attacher/AttachRequest.h"
-#include "gazebo_ros_link_attacher/AttachResponse.h"
+#include "turtlebot3_ball_following/Attach.h"
+#include "turtlebot3_ball_following/AttachRequest.h"
+#include "turtlebot3_ball_following/AttachResponse.h"
 
 namespace gazebo
 {
@@ -62,10 +62,10 @@ namespace gazebo
         ros::ServiceServer attach_service_;
         ros::ServiceServer detach_service_;
 
-        bool attach_callback(gazebo_ros_link_attacher::Attach::Request &req,
-                              gazebo_ros_link_attacher::Attach::Response &res);
-        bool detach_callback(gazebo_ros_link_attacher::Attach::Request &req,
-                             gazebo_ros_link_attacher::Attach::Response &res);
+        bool attach_callback(turtlebot3_ball_following::Attach::Request &req,
+                              turtlebot3_ball_following::Attach::Response &res);
+        bool detach_callback(turtlebot3_ball_following::Attach::Request &req,
+                             turtlebot3_ball_following::Attach::Response &res);
 
         std::vector<fixedJoint> joints;
 

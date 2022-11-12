@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   message_generation
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -116,11 +117,6 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
-
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/turtlebot3_ball_following.cpp
@@ -209,9 +205,15 @@ catkin_install_python(PROGRAMS
 # catkin_add_nosetests(test)
 
 find_package(gazebo REQUIRED)
-include_directories(${GAZEBO_INCLUDE_DIRS})
-link_directories(${GAZEBO_LIBRARY_DIRS})
-list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-add_library(ball_moving_plugin SHARED plugins/ball_moving_plugin.cc)
-target_link_libraries(ball_moving_plugin ${GAZEBO_LIBRARIES})
+include_directories(include)
+link_directories(${GAZEBO_LIBRARY_DIRS})
+include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
+
+## Declare a cpp library
+add_library(${PROJECT_NAME} plugins/gazebo_ros_link_attacher.cpp)
+
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS})
