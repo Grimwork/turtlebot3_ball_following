@@ -6,7 +6,7 @@ import tty, termios
 from geometry_msgs.msg import Twist
 
 
-LIN_VEL_STEP = 1.0
+LIN_VEL_STEP = 0.2
 ANG_VEL_STEP = 1.0
 
 def getKey():
@@ -26,43 +26,42 @@ if __name__=="__main__":
     pub = rospy.Publisher('ball_moving_info', Twist, queue_size=10)
 
     msg = """
-    =============================
-    Moving the ball around:
-         Z
-    Q    S    D
-        
-    Spacebar to jump !
+=============================
+Moving the ball around:
+     Z
+Q    S    D
 
-    CTRL-C to quit
-    =============================
-    """
+X to stop all motion !    
+Spacebar to jump !
+
+CTRL-C to quit
+=============================
+"""
 
     print(msg)
 
     settings = termios.tcgetattr(sys.stdin)
-    linear_vel = 0
+    linear_vel_x = 0
+    linear_vel_y = 0
     linear_vel_z = 0
     angular_vel = 0
     while not rospy.is_shutdown():
         key = getKey()
         if key == 'z' :
-            print("Z is pressed !")
-            linear_vel = LIN_VEL_STEP
+            linear_vel_x = - LIN_VEL_STEP
         elif key == 'q' :
-            print("Q is pressed !")
-            angular_vel = ANG_VEL_STEP
+            linear_vel_y = - LIN_VEL_STEP
         elif key == 's' :
-            print("S is pressed !")
-            linear_vel = - LIN_VEL_STEP
+            linear_vel_x = LIN_VEL_STEP
         elif key == 'd' :
-            print("D is pressed !")
-            angular_vel = - ANG_VEL_STEP
+            linear_vel_y = LIN_VEL_STEP
         elif key == ' ' :
-            print("Space is pressed !")
-            linear_vel_z = LIN_VEL_STEP
+            linear_vel_z = 1.0
         elif key == 'x' : # Press x to stop
             print("X is pressed ! \n Ball stopped moving !")
-            linear_vel   = 0.0
+            linear_vel_x = 0.0
+            linear_vel_y = 0.0
+            linear_vel_z = 0.0
             angular_vel  = 0.0
         else:
             if key == '\x03' : # CTRL-C
@@ -70,8 +69,8 @@ if __name__=="__main__":
 
         twist = Twist()
 
-        twist.linear.x = linear_vel
-        twist.linear.y = 0.0
+        twist.linear.x = linear_vel_x
+        twist.linear.y = linear_vel_y
         twist.linear.z = linear_vel_z
 
         twist.angular.x = 0.0
