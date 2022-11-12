@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
+from turtlebot3_ball_following.srv import Attach, AttachRequest, AttachResponse
 
 
 if __name__ == '__main__':
