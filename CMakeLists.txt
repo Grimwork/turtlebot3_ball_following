@@ -60,6 +60,7 @@ add_message_files(
 add_service_files(
   FILES
   Attach.srv
+  ManipulationCommand.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -159,6 +160,7 @@ catkin_package(
 catkin_install_python(PROGRAMS
    scripts/video_capture.py
    scripts/tracking_command.py
+   scripts/manipulation_command.py
    scripts/tests/ball_tracking_v0.py
    scripts/tests/image_processing/check_image_info.py
    scripts/tests/image_processing/get_image_process.py

@@ -16,15 +16,18 @@ sudo apt install ros-noetic-ros-control* ros-noetic-control* ros-noetic-moveit*
 
 ```bash
 roslaunch turtlebot3_ball_following simulator_with_arm.launch
+roslaunch turtlebot3_ball_following robot_controler.launch
 ```
 
-Move arm
+Tracking command
 ```bash
-python3 scripts/tests/test_move.py
+rosrun turtlebot3_ball_following tracking_command.py run
+rosrun turtlebot3_ball_following tracking_command.py stop
 ```
 
-Attach end effector and yellow ball
-
+Manipulation command 
 ```bash
-python3 scripts/tests/pick/attach.py
+rosrun turtlebot3_ball_following manipulation_command.py init
+rosrun turtlebot3_ball_following manipulation_command.py pick
+rosrun turtlebot3_ball_following manipulation_command.py podium
 ```

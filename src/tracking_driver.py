@@ -44,8 +44,11 @@ class Tracking_driver:
             error_radius = self.GOAL_RADIUS - current_radius
             error_pos = self.GOAL_CENTER - current_pos_x
 
+            speed = Twist()
+
             if error_radius < 15:
-                self.pub.publish(self.STOP)
+                speed.angular.z = self.MAX_ROTATION * (error_pos / self.GOAL_CENTER)
+                self.pub.publish(speed)
                 return
 
             speed = Twist()
