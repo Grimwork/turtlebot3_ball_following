@@ -29,5 +29,6 @@ Manipulation command
 ```bash
 rosrun turtlebot3_ball_following manipulation_command.py init
 rosrun turtlebot3_ball_following manipulation_command.py pick
+rosrun turtlebot3_ball_following manipulation_command.py detach
 rosrun turtlebot3_ball_following manipulation_command.py podium
 ```

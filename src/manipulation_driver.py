@@ -43,6 +43,10 @@ class Manipulation_driver:
             self.__attach()
 
             status = True
+        elif command == "detach":
+            self.__detach()
+
+            status = True
         elif command == "podium":
             self.__run_gripper(self.OPEN_GRIPPER)
             self.__run_arm(self.HOME_BALL_ARM)
@@ -67,9 +71,7 @@ class Manipulation_driver:
         gripper_group.stop()
 
     def __attach(self):
-        attach_srv = rospy.ServiceProxy('/link_attacher_node/attach',
-                                    Attach)
-
+        attach_srv = rospy.ServiceProxy('/link_attacher_node/attach', Attach)
         attach_srv.wait_for_service()
 
         rospy.loginfo("Attaching yellow ball and arm")
@@ -80,6 +82,19 @@ class Manipulation_driver:
         req.link_name_2 = "link"
 
         attach_srv.call(req)
+
+    def __detach(self):
+        detact_srv = rospy.ServiceProxy('/link_attacher_node/detach', Attach)
+        detact_srv.wait_for_service()
+
+        rospy.loginfo("Detaching yellow ball and arm")
+        req = AttachRequest()
+        req.model_name_1 = "robot"
+        req.link_name_1 = "link5"
+        req.model_name_2 = "yellow_ball"
+        req.link_name_2 = "link"
+
+        detact_srv.call(req)
 
     """def __get_joints0_arm(self):
 

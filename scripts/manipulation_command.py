@@ -5,7 +5,7 @@ import argparse
 
 from turtlebot3_ball_following.srv import ManipulationCommand
 
-COMMANDS = ["pick", "podium", "init"]
+COMMANDS = ["pick", "detach", "podium", "init"]
 
 def manipulation_command(command):
     rospy.wait_for_service('/manipulation_driver/command')
