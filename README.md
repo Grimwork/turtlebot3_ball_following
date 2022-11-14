@@ -1,22 +1,25 @@
-# TurtleBot3 Pick yellow ball (version 0)
+# Turtlebot3 ball following
 
 ## Plugins
 
 [Link attacher](https://github.com/pal-robotics/gazebo_ros_link_attacher)
 
-## Requirement 
-- [TurtleBot 3 Manipulation](https://github.com/ROBOTIS-GIT/turtlebot3_manipulation)
-- [TurtleBot 3 Manipulation simulations](https://github.com/ROBOTIS-GIT/turtlebot3_manipulation_simulations)
-- [Open Manipulator dependencies](https://github.com/ROBOTIS-GIT/open_manipulator_dependencies)
+## Installation 
 
-```bash
-sudo apt install ros-noetic-ros-control* ros-noetic-control* ros-noetic-moveit*
-```
+- [Setup TurtleBot3](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)
+
+- [Setup manipulation](https://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#turtlebot3-with-openmanipulator)
+
 ## Quick Start
 
 ```bash
 roslaunch turtlebot3_ball_following simulator_with_arm.launch
 roslaunch turtlebot3_ball_following robot_controler.launch
+```
+
+Yellow ball teleop
+```bash
+roslaunch turtlebot3_ball_following ball_teleop.launch
 ```
 
 Tracking command
