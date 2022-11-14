@@ -223,3 +223,8 @@ add_library(${PROJECT_NAME} plugins/gazebo_ros_link_attacher.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_library(ball_moving_plugin SHARED plugins/ball_moving_plugin.cc)
+target_link_libraries(ball_moving_plugin ${GAZEBO_LIBRARIES})
