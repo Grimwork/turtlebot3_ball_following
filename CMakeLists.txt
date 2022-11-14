@@ -8,10 +8,12 @@ project(turtlebot3_ball_following)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  moveit_commander
   rospy
   roscpp
   std_msgs
   message_generation
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -55,11 +57,11 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  Attach.srv
+  ManipulationCommand.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -116,11 +118,6 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
-
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/turtlebot3_ball_following.cpp
@@ -162,8 +159,13 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
    scripts/video_capture.py
+   scripts/tracking_command.py
+   scripts/manipulation_command.py
+   scripts/tests/ball_tracking_v0.py
    scripts/tests/image_processing/check_image_info.py
    scripts/tests/image_processing/get_image_process.py
+   scripts/tests/pick/attach.py
+   scripts/tests/pick/detach.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -209,9 +211,15 @@ catkin_install_python(PROGRAMS
 # catkin_add_nosetests(test)
 
 find_package(gazebo REQUIRED)
-include_directories(${GAZEBO_INCLUDE_DIRS})
-link_directories(${GAZEBO_LIBRARY_DIRS})
-list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-add_library(ball_moving_plugin SHARED plugins/ball_moving_plugin.cc)
-target_link_libraries(ball_moving_plugin ${GAZEBO_LIBRARIES})
+include_directories(include)
+link_directories(${GAZEBO_LIBRARY_DIRS})
+include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
+
+## Declare a cpp library
+add_library(${PROJECT_NAME} plugins/gazebo_ros_link_attacher.cpp)
+
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS})

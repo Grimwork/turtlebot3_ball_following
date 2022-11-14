@@ -1,8 +1,8 @@
 <launch>
   <arg name="model" default="waffle_pi"/>
-  <arg name="x_pos" default="-2.0"/>
-  <arg name="y_pos" default="-0.5"/>
-  <arg name="z_pos" default="0.0"/>
+  <arg name="x_pos" default="-10.0"/>
+  <arg name="y_pos" default="0"/>
+  <arg name="z_pos" default="0"/>
 
   <env name="GAZEBO_MODEL_PATH" value="$(find turtlebot3_ball_following)/models" />
 
