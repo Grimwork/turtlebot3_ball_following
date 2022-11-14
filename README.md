@@ -14,7 +14,7 @@
 
 ```bash
 roslaunch turtlebot3_ball_following simulator_with_arm.launch
-roslaunch turtlebot3_ball_following robot_controler.launch
+roslaunch turtlebot3_ball_following robot_controller.launch
 ```
 
 Yellow ball teleop
