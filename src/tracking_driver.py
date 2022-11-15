@@ -19,6 +19,8 @@ class Tracking_driver:
 
     COMMAND = False
 
+    LAST_POS_X_BALL = 0
+
     def __init__(self):
 
         rospy.init_node("tracking_driver", anonymous=True)
@@ -41,6 +43,8 @@ class Tracking_driver:
             current_radius = data.ball_radius
             current_pos_x = data.ball_center_x
 
+            self.LAST_POS_X_BALL = current_pos_x
+
             error_radius = self.GOAL_RADIUS - current_radius
             error_pos = self.GOAL_CENTER - current_pos_x
 
@@ -57,8 +61,10 @@ class Tracking_driver:
 
             self.pub.publish(speed)
         else:
+            angular_speed = 0.5
+
             rotate = Twist()
-            rotate.angular.z = 0.5
+            rotate.angular.z = angular_speed if self.LAST_POS_X_BALL < CENTER_X_CAMERA else -angular_speed
 
             self.pub.publish(rotate)
 
