@@ -28,7 +28,7 @@ if __name__=="__main__":
     msg = """
 =============================
 Moving the ball around:
-     Z
+ 'A' Z 'E'
 Q    S    D
 
 X to stop all motion !    
@@ -48,17 +48,21 @@ CTRL-C to quit
     while not rospy.is_shutdown():
         key = getKey()
         if key == 'z' :
-            linear_vel_x = - LIN_VEL_STEP
+            linear_vel_x += - LIN_VEL_STEP
         elif key == 'q' :
-            linear_vel_y = - LIN_VEL_STEP
+            linear_vel_y += - LIN_VEL_STEP
         elif key == 's' :
-            linear_vel_x = LIN_VEL_STEP
+            linear_vel_x += LIN_VEL_STEP
         elif key == 'd' :
-            linear_vel_y = LIN_VEL_STEP
+            linear_vel_y += LIN_VEL_STEP
+        elif key == 'a' :
+            angular_vel += ANG_VEL_STEP
+        elif key == 'e' :
+            angular_vel += ANG_VEL_STEP
         elif key == ' ' :
-            linear_vel_z = 1.0
+            linear_vel_z = LIN_VEL_STEP
         elif key == 'x' : # Press x to stop
-            print("X is pressed ! \n Ball stopped moving !")
+            print("Ball stopped moving !")
             linear_vel_x = 0.0
             linear_vel_y = 0.0
             linear_vel_z = 0.0
