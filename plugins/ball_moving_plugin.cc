@@ -28,7 +28,7 @@ namespace gazebo
       std::cout << "Model Name = " << this->model->GetName() << std::endl; 
 
       // Subscribe to the Ball info topic
-      this->rosSub = rosNode.subscribe("ball_moving_info", 1000, &Ball_moving_plugin::move_ball_callback, this);
+      this->rosSub = rosNode.subscribe("/gazebo/ball_moving_info", 1000, &Ball_moving_plugin::move_ball_callback, this);
 
       // Listen to the update event. This event is broadcast every
       // simulation iteration.

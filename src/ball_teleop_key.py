@@ -23,7 +23,7 @@ def getKey():
 if __name__=="__main__":
 
     rospy.init_node('ball_teleop_key')
-    pub = rospy.Publisher('ball_moving_info', Twist, queue_size=10)
+    pub = rospy.Publisher('/gazebo/ball_moving_info', Twist, queue_size=10)
 
     msg = """
 =============================
@@ -60,7 +60,7 @@ CTRL-C to quit
         elif key == 'e' :
             angular_vel += ANG_VEL_STEP
         elif key == ' ' :
-            linear_vel_z = LIN_VEL_STEP
+            linear_vel_z = 1.0
         elif key == 'x' : # Press x to stop
             print("Ball stopped moving !")
             linear_vel_x = 0.0
